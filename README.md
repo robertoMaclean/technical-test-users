@@ -1,7 +1,7 @@
 
 # Usuarios Sentra Prueba Técnica
 
-API RESTful de creación de usuarios.
+API RESTful de creación de usuarios con validación de email, password, generación y persistencia de token.
 
 
 ## Stack
@@ -10,34 +10,55 @@ API RESTful de creación de usuarios.
 - Gestión de dependencias [Gradle 8.5.0](https://gradle.org/)
 - Framework de desarrollo [Spring Boot 2.7.0](https://spring.io/projects/spring-boot)
 
+## Diagrama solución propuesta
 
+A continuación, se muestra la solución propuesta del servicio principal, que es el de Creación de Usuarios.
+
+![Sentra Users Diagram](img/sentra-users.drawio.png "Sentra Users")
 
 ## Correr Local
 
-Clonar el proyecto
+- Clonar el proyecto
 
 ```bash
-  git clone https://link-to-project
+  git clone https://github.com/robertoMaclean/sentra-users.git
 ```
 
-Ir al directorio
+- Ir al directorio
 
 ```bash
-  cd my-project
+  cd sentra-users
 ```
 
-Instalar dependencias
+- Instalar dependencias
 
 ```bash
   gradle build
 ```
 
-Arrancar el servidor
+- Arrancar el servidor
 
 ```bash
   gradle bootRun
 ```
-
+- Ejemplo creación de usuario
+```bash
+curl --request POST \
+  --url http://localhost:8080/user/ \
+  --header 'Content-Type: application/json' \
+  --data '{
+	"name": "Juan Rodriguez",
+	"email": "juan@rodriguez.org",
+	"password": "hunter2",
+	"phones": [
+		{
+			"number": "+56878987",
+			"citycode": "1",
+			"countrycode": "57"
+		}
+	]
+}'
+```
 
 ## Documentación
 Levantar el Servidor e ir al siguiente link de [Swagger](http://localhost:8080/swagger-ui/).
