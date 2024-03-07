@@ -61,9 +61,13 @@ curl --request POST \
 ```
 
 ## Documentación
+
 Levantar el Servidor e ir al siguiente link de [Swagger](http://localhost:8080/swagger-ui/).
 
 
+## Configuración validación contraseña
+
+La contraseña se valida mediante una expresión regular, la cual, puede ser configurada dentro de las properties del proyecto en la ruta ***src/main/resources/application.properties*** la propiedad se llama ***password.regexp***
 
 
 ## Autor

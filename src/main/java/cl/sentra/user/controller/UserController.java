@@ -7,8 +7,10 @@ import cl.sentra.user.exception.NotFoundException;
 import cl.sentra.user.exception.UserExistException;
 import cl.sentra.user.model.User;
 import cl.sentra.user.service.UserService;
+import cl.sentra.user.validator.PasswordValidator;
 import io.swagger.annotations.*;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.support.DefaultMessageSourceResolvable;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
@@ -27,6 +29,8 @@ import java.util.stream.Collectors;
 public class UserController {
 
     private final UserService userService;
+    @Value("${password.regexp}")
+    private String passwordRegex;
 
     @Autowired
     public UserController(UserService userService) {
@@ -63,6 +67,10 @@ public class UserController {
                     .map(DefaultMessageSourceResolvable::getDefaultMessage)
                     .collect(Collectors.joining(","));
             throw new BadRequestException(errorMessage);
+        }
+        PasswordValidator passwordValidator = new PasswordValidator();
+        if(!passwordValidator.isValid(userRequest.getPassword(), passwordRegex)) {
+            throw new BadRequestException("Invalid password format");
         }
         return ResponseEntity.status(HttpStatus.CREATED).body(userService.saveUser(userRequest));
     }
