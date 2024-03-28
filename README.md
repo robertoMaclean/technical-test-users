@@ -1,50 +1,67 @@
+# Prueba Técnica API Usuarios
 
-# Usuarios Sentra Prueba Técnica
+### Contenido
 
-API RESTful de creación de usuarios con validación de email, password, generación y persistencia de token.
+- [Descripción](#descripción)
+- [Stack Tecnológico](#stack-tecnolgico)
+- [Diagrama solución propuesta](#diagrama-solución-propuesta)
+- [Correr Local](#correr-local)
+- [Test](#test)
+- [Base de datos](#base-de-datos)
+- [Documentación](#documentación)
+- [Configuración validación contraseña](#configuración-validación-contraseña)
+- [Autor](#autor)
+- [Links](#links)
 
 
-## Stack
+## Descripción
 
-- Lenguaje de programación [Java 11](https://www.java.com/en/download/help/download_options.html)
-- Gestión de dependencias [Gradle 8.5.0](https://gradle.org/)
-- Framework de desarrollo [Spring Boot 2.7.0](https://spring.io/projects/spring-boot)
+Este proyecto consiste en un sistema que permite registrar usuarios, validar contraseña, 
+email y generar un token utilizando JWT.
+
+
+## Stack Tecnológico
+
+A continuación se detallan las tecnologías utilizadas para el desarrollo del proyecto.
+
+- Lenguaje de programación [Java 17](https://www.java.com/en/download/help/download_options.html)
+- Gestión de dependencias [Gradle 8.5.0](https://./gradlew.org/)
+- Framework de desarrollo [Spring Boot 3.2.4](https://spring.io/projects/spring-boot)
+- IDE [Intellij](https://www.jetbrains.com)
+- Gestión versiones JDK [SDKMAN](https://sdkman.io/)
 
 ## Diagrama solución propuesta
 
-A continuación, se muestra la solución propuesta del servicio principal, que es el de Creación de Usuarios.
+A continuación, se muestra la solución el diagrama de solución propuesta del servicio principal, que es el de Creación de Usuarios.
 
-![Sentra Users Diagram](img/sentra-users.drawio.png "Sentra Users")
+![Users Diagram](img/technical-test-users.drawio.png "Users")
 
 ## Correr Local
 
 - Clonar el proyecto
 
 ```bash
-  git clone https://github.com/robertoMaclean/sentra-users.git
+  git clone https://github.com/robertoMaclean/technical-test-users.git
 ```
 
 - Ir al directorio
 
 ```bash
-  cd sentra-users
+  cd technical-test-users
 ```
 
-- Instalar dependencias
+- Instalar dependencias y arrancar servidor
 
 ```bash
-  gradle build
+  ./gradlew build
+  ./gradlew bootRun
 ```
 
-- Arrancar el servidor
-
-```bash
-  gradle bootRun
-```
 - Ejemplo creación de usuario
+
 ```bash
 curl --request POST \
-  --url http://localhost:8080/user/ \
+  --url http://localhost:8080/user \
   --header 'Content-Type: application/json' \
   --data '{
 	"name": "Juan Rodriguez",
@@ -60,17 +77,54 @@ curl --request POST \
 }'
 ```
 
+## Test
+
+Para la ejecución de test debe ingresar el siguiente comando:
+```bash
+./gradlew test
+```
+
+## Base de datos
+
+No es necesario crear la Base de Datos, ya que esta se genera con el ORM mediante código (Code First). La Base de Datos es una ***H2***, 
+lo datos persisten en memoria y en cada reinicio del servidor los datos se borran.
+
 ## Documentación
 
-Levantar el Servidor e ir al siguiente link de [Swagger](http://localhost:8080/swagger-ui/).
+Para ver el detalle de la definición de la API, seguir las siguientes indicaciones:
+
+- Iniciar
+```bash
+./gradlew bootRun
+```
+
+- ir al siguiente link [Swagger](http://localhost:8080/api-docs).
 
 
 ## Configuración validación contraseña
 
-La contraseña se valida mediante una expresión regular, la cual, puede ser configurada dentro de las properties del proyecto en la ruta ***src/main/resources/application.properties*** la propiedad se llama ***password.regexp***
+La validación de contraseña es configurable desde un servicio habilitado para dicho propósito. A continuación un ejemplo 
+de como se puede configurar la contraseña.
 
+```bash
+curl --request POST \
+  --url http://localhost:8080/password \
+  --header 'Content-Type: application/json' \
+  --data '{
+	"minLength": 3,
+	"maxLength": 10,
+	"requiresUpperCase": true,
+	"requiresLowerCase": false,
+	"requiresDigit": false,
+	"requiresSpecialChar": true
+}'
+```
 
 ## Autor
+Roberto Mac lean M.
 
-- [@robertoMaclean](https://www.github.com/robertoMaclean)
+## Links
+
+- [Github](https://www.github.com/robertoMaclean)
+- [Mi Portafolio](https://robmaclean-portfolio.netlify.app)
 
