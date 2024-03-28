@@ -3,7 +3,7 @@
 ### Contenido
 
 - [Descripción](#descripción)
-- [Stack Tecnológico](#stack-tecnolgico)
+- [Stack Tecnológico](#stack-tecnológico)
 - [Diagrama solución propuesta](#diagrama-solución-propuesta)
 - [Correr Local](#correr-local)
 - [Test](#test)
